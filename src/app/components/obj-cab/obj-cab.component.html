@@ -1,0 +1,163 @@
+<p>obj-cab works!</p>
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                Administrar Teams
+            </div>
+            <div class="card-body">
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                    data-target="#crearTeams">Nuevo Cliente</button>
+            </div>
+            
+            <div class="modal fade" id="crearTeams" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Crear Cliente</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <!--
+                            txtcli_nombres:[''],
+                            txtcli_direccion:[''],
+                             txtcli_telefono:['']
+                        -->
+                        <div class="modal-body">
+                            <form [formGroup]="form">
+                                <div class="form-group">
+                                    <input type="text" name="Cedula" formControlName="txtcli_identificacion"
+                                        placeholder="Insertar Cedula Cliente" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="Nombre Cliente" formControlName="txtcli_nombres"
+                                        placeholder="Insertar nombre Cliente" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="Direccion Cliente" formControlName="txtcli_direccion"
+                                        placeholder="Insertar Direccion Cliente" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="Telefono Cliente" formControlName="txtcli_telefono"
+                                        placeholder="Insertar Telefono Cliente" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="date" name="Fecha Nacimiento" formControlName="txtcli_fecha_nacimiento"
+                                        placeholder="Insertar Fecha Nacimiento" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" (click)="crearObjCab()"
+                                        data-dismiss="modal">Crear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <button  type="button"  [routerLink]="['/cabecera']"
+                    class="btn btn-primary btn-block">
+                    Regresar
+                </button>
+    </div>
+    
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>Identificacion</th>
+                    <th>Nombre</th>
+                    <th>Direccion</th>
+                    <th>Telefono</th>
+                    <th>FechaNaci</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--
+                    cli_codigo:Number,
+cli_identificacion:String,
+cli_nombres:String,
+cli_direccion:String,
+cli_telefono:String,
+cli_fecha_nacimiento:Date,
+cli_estado:Boolean
+                -->
+                <tr *ngFor="let i of objCabs">
+                    <td>
+                        {{i.cli_identificacion}}
+                    </td>
+                    <td>
+                        {{i.cli_nombres}}
+                    </td>
+                    <td>
+                        {{i.cli_direccion}}
+                    </td>
+                    <td>
+                        {{i.cli_telefono}}
+                    </td>
+                    <td>
+                        {{i.cli_fecha_nacimiento}}
+                    </td>
+                    
+                    <td class="d-flex justify-content-center">
+                        
+                       
+                        <a class="btn btn-danger" (click)="eliminarObjCab(i.cli_codigo)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        
+                        <a class="btn btn-success" data-toggle="modal" data-target="#editarTeams"
+                            (click)="infoUpdateObjCab(i.cli_codigo,i.cli_nombres,i.cli_direccion,i.cli_telefono)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="modal fade" id="editarTeams" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar cliente</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="form">
+                                            <div class="form-group">
+                                                <label>
+                                                    <h6>Id Cliente:{{informacionObjCab.cli_codigo}}</h6>
+                                                </label>
+                                                <input type="text" name="Nombre cliente" formControlName="txtcli_nombres"
+                                                    placeholder="{{informacionObjCab.cli_nombres}}" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="direccion cliente" formControlName="txtcli_direccion"
+                                                    placeholder="{{informacionObjCab.cli_direccion}}" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="telefono cliente" formControlName="txtcli_telefono"
+                                                    placeholder="{{informacionObjCab.cli_telefono}}" class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    (click)="actualizarObjCab(informacionObjCab.cli_codigo)"
+                                                    data-dismiss="modal">Actualizar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

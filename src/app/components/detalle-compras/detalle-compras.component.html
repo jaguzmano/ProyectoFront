@@ -1,0 +1,303 @@
+<div class="container" style="margin-top: 60px;">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card-header" style=background-color:#accc;>
+                <div class="modal-body">
+                    <form [formGroup]="form">
+                        <div class="controls form-inline">
+                            <div class="card-header" style="background-color:#7ccc ; display:flex">
+                                <div class="form-group">
+                                    <h1 for="choose"> N°:</h1>
+                                    <input type="text" name="ID" formControlName="txtnumfactingresado"
+                                        placeholder="Insertar ID de Factura" class="form-control" required minlength="6"
+                                        maxlength="16"
+                                        style="width : 200px; height : 40px ; margin-left:10px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Cedula">Cédula : </label>
+                                <input class="form-control" type="search" list="listamodelos"
+                                    [(ngModel)]="this.informacionProveedor.pro_cedula_ruc"
+                                    formControlName="ProveedorSelected"
+                                    style="width : 200px; height : 40px ; margin-left:20px; margin-top:0px; margin-right:25px; margin-bottom: 10px ;"
+                                    (change)="findProveedor()">
+                                <datalist id="listamodelos">
+                                    <option *ngFor="let t of  proveedorss">
+                                        {{t.pro_cedula_ruc+" "+t.pro_nombre}}
+                                    </option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="Nombre">Nombre : </label>
+                                <input type="text" name="Nombre Proveedor" formControlName="txtpro_nombre"
+                                    class="form-control"
+                                    style="width : 200px; height : 40px; margin-left:20px; margin-top:0px; margin-right:25px; margin-bottom: 10px"
+                                    [(ngModel)]="this.informacionProveedor.pro_nombre" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="Direccion">Dirección : </label>
+                                <input type="text" name="Direccion Proveedor" formControlName="txtpro_direccion"
+                                    class="form-control"
+                                    style="width : 200px; height : 40px; margin-left:20px; margin-top:0px; margin-right:25px; margin-bottom: 10px"
+                                    [(ngModel)]="this.informacionProveedor.pro_direccion" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="Cuidad">Cuidad : </label>
+                                <input type="text" name="Cuidad Proveedor" formControlName="txtpro_ciudad"
+                                    class="form-control"
+                                    style="width : 150px; height : 40px; margin-left:20px; margin-top:0px; margin-right:25px; margin-bottom: 10px"
+                                    [(ngModel)]="this.informacionProveedor.pro_ciudad" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="Telefono">Teléfono : </label>
+                                <input type="text" name="Telefono Proveedor" formControlName="txtpro_telefono"
+                                    class="form-control"
+                                    style="width : 200px; height : 40px; margin-left:10px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                    [(ngModel)]="this.informacionProveedor.pro_telefono" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="Correo">Correo : </label>
+                                <input type="text" name="Correo Electronico" formControlName="txtpro_correo"
+                                    class="form-control"
+                                    style="width : 200px; height : 40px; margin-left:30px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                    [(ngModel)]="this.informacionProveedor.pro_correo" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="Credito">Tipo Pago: </label>
+                                <input type="text" name="Credito o Contado" formControlName="txtpro_credito_contado"
+                                    class="form-control"
+                                    style="width : 200px; height : 40px; margin-left:20px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                    [(ngModel)]="this.informacionProveedor.pro_credito_contado" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="Fecha">Fecha : </label>
+                                <input type="date" formControlName="txtfecha" 
+                                    class="form-control"
+                                    style="width : 150px; height : 40px; margin-left:30px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                    [(ngModel)]="this.fecha">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+            <div class="card-header" style=background-color:#accc;>
+                <form [formGroup]="form">
+                    <div class="controls form-inline">
+                        <label for="inputGroupSelect01">Producto:</label>
+                        <input class="form-control" type="search" list="listaProducto"
+                            formControlName="ProductoSelected" (change)="findProducto()"
+                            style="width : 200px; height : 40px ; margin-left:20px; margin-top:10px; margin-right:25px; margin-bottom: 10px ;">
+                        <datalist id="listaProducto">
+                            <option *ngFor="let p of Productos">{{p.prod_nombre}}
+                            </option>
+                        </datalist>
+                        <label for="Cantidad">Cantidad :</label>
+                        <input type="number" required name="Cantidad" min="1" max="1000" formControlName="txtcantidad"
+                            [(ngModel)]="this.cantidad" class="form-control"
+                            style="width : 70px; height : 40px ; margin-left:30px; margin-top:10px; margin-right:25px; margin-bottom: 10px">
+                        <div class="form-group">
+                            <label for="Precio">Precio : </label>
+                            <input type="number" name="Precio" min="1" formControlName="txtprod_costo"
+                                [(ngModel)]="this.informacionProducto.prod_costo" class="form-control"
+                                style="width : 75px; height : 40px; margin-left:10px; margin-top:10px; margin-right:25px; margin-bottom: 10px">
+                        </div>
+                        <div class="form-group">
+                            <label for="PVP">PVP : </label>
+                            <input type="text" name="PVP" formControlName="txtprod_pvp" class="form-control"
+                                [(ngModel)]="this.informacionProducto.prod_pvp"
+                                style="width : 50px; height : 40px; margin-left:10px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="Stock">Stock: </label>
+                            <input type="text" name="Stock" formControlName="txtprod_stock" class="form-control"
+                                [(ngModel)]="this.informacionProducto.prod_stock"
+                                style="width : 50px; height : 40px; margin-left:10px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="IVA">IVA : </label>
+                            <input type="text" name="IVA" formControlName="txtprod_iva" class="form-control"
+                                [(ngModel)]="this.informacionProducto.prod_iva"
+                                style="width : 75px; height : 40px; margin-left:10px; margin-top:10px; margin-right:25px; margin-bottom: 10px"
+                                readonly>
+                        </div>
+                        <button *ngIf="this.form.value.txtnumfactingresado.length > 6    " type="button"
+                            (click)="agregarDetalle_compras()" class="btn btn-primary">
+                            Agregar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+
+            <div class="card-header" style=background-color:#accc;>
+                <table class="table table-bordered table-hover bg-white"
+                    style="width : 1000px; margin-left:50px; background-color:#accc;">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th style="width: 100px">Cantidad </th>
+                            <th style="width: 100px">Precio </th>
+                            <th style="width: 100px">Iva </th>
+                            <th style="width: 100px">Subtotal</th>
+                            <th style="width: 100px">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of Detalle_comprass">
+                            <td>{{d.prod_nombre}}</td>
+                            <td style="width: 100px">{{d.dcom_cantidad}}</td>
+                            <td style="width: 100px">{{d.dcom_costo}}</td>
+                            <td style="width: 100px">{{d.dcom_valoriva}}</td>
+                            <td style="width: 100px">{{d.dcom_precio}}</td>
+
+
+                            <td class="d-flex justify-content-center" style="width: 100px">
+                                <button type="button" (click)="quitarDetalle_compras(d)" class="btn btn-primary">
+                                    Quitar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-header" style=background-color:#accc;>
+                <div class="container d-flex flex-wrap justify-content-end">
+                    <div class="text-end">
+                        <div class="controls form-inline">
+                            <label for="Total">Total: </label>
+                            <input type="text" readonly name="Total" value="{{txtTotal}}" class="form-control"
+                                style="width : 75px; height : 40px; margin-left:10px;  margin-bottom: 10px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header" style=background-color:#accc;>
+                <div class="card-body">
+                    <div class="text-end">
+                        <button *ngIf="Detalle_comprass.length > 0  "  type="button"
+                            (click)="postCabeceraDetalle_compras() " [routerLink]="['/fac_compras']" META
+                            HTTP-EQUIV="REFRESH" class="btn btn-primary "
+                            style="width : 125px; height : 40px;  margin-right:25px; " >
+                            Facturar
+                        </button>
+                        <button type="button" [routerLink]="['/fac_compras']" class="btn btn-primary "
+                            style="width : 125px; height : 40px;  margin-right:25px; ">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#CargarDatos"
+                            style="width : 125px; height : 40px;  ">
+                            Pagar
+                        </button>
+                        <div class="modal fade" id="CargarDatos" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel">
+                            <div class="modal-dialog  modal-lg" role="document" aria-hidden="true">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Pago de la Factura</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="card-header" style=background-color:#accc;>
+                                        <form [formGroup]="form">
+                                            <div class="controls form-inline">
+                                                <label for="Tipo_Pago">Tipo Pago:</label>
+                                                <div class="form-group">
+                                                    <input class="form-control" type="search" name="Tipo_Pago"
+                                                        list="listaTipoPago" formControlName="txtpro_credito_contado"
+                                                        style="width : 200px; height : 40px ; margin-left:20px; margin-top:10px; margin-right:25px; margin-bottom: 10px ;"
+                                                        [readonly]="this.pro_ToF==false" (change)="AsignarTipoPago()">
+                                                    <datalist id="listaTipoPago">
+                                                        <option>Contado</option>
+                                                        <option>Crédito</option>
+                                                    </datalist>
+                                                </div>
+                                                <label for="fechav">Fecha Pago:</label>
+                                                <div class="form-group">
+                                                    <input type="date" name="fechav" [(ngModel)]="this.fechav"
+                                                        formControlName="txtfcom_fechaven"
+                                                        placeholder="Insertar Fecha Vencimiento" class="form-control"
+                                                        style="width : 200px; height : 40px ; margin-left:20px; margin-top:10px; margin-right:25px; margin-bottom: 10px ;"
+                                                        [readonly]="this.pro_ToF==false">
+                                                </div>
+                                            </div>
+                                            <div id="general" style="height : 130px;  background-color:#878484">
+                                                <div class="modal-body">
+                                                    <div id="izquierdo"
+                                                        style="width : 350px; height : 40px; background-color:#878484; float: right; ">
+                                                        <div class="controls form-inline">
+                                                            <h5 id="Saldo">Valor :</h5>
+                                                            <div class="form-group">
+                                                                <input type="text" name="Saldo"
+                                                                    formControlName="txtSaldo"
+                                                                    [(ngModel)]="this.txtTotal" class="form-control"
+                                                                    style="width : 200px; height : 40px ; margin-left:32px;   margin-bottom: 10px ;"
+                                                                    readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="derecho"
+                                                        style="width : 350px; height : 40px; background-color:#878484; ">
+                                                        <div class="controls form-inline">
+                                                            <h5 id="Total">TOTAL :</h5>
+                                                            <div class="form-group">
+                                                                <input type="text" name="Total"
+                                                                    formControlName="txtTotal"
+                                                                    [(ngModel)]="this.txtTotal" class="form-control"
+                                                                    style="width : 200px; height : 40px ; margin-left:50px;   margin-bottom: 10px ;"
+                                                                    readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="izquiero inferior"
+                                                        style="width : 350px; height : 40px; background-color:#878484; float: right; margin-top: 20px;">
+                                                        <div class="controls form-inline">
+                                                            <h5 id="Cambio">SALDO:</h5>
+                                                            <div class="form-group">
+                                                                <input type="text" name="Vuelto"
+                                                                    formControlName="txtVuelto"
+                                                                    [(ngModel)]="this.txtVuelto" class="form-control"
+                                                                    style="width : 200px; height : 40px ; margin-left:20px;   margin-bottom: 10px ;"
+                                                                    readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="derecho inferior"
+                                                        style="width : 350px; height : 40px; background-color:grey; margin-top: 20px; ">
+                                                        <div class="controls form-inline">
+                                                            <h5 id="Pago">EFECTIVO :</h5>
+                                                            <div class="form-group">
+                                                                <input type="number" name="Pago" min="0"
+                                                                    formControlName="txtPago"
+                                                                    placeholder="Insertar Valor Recibido"
+                                                                    style="width : 200px; height : 40px ; margin-left:20px;   margin-bottom: 10px ;"
+                                                                    class="form-control" [readonly]="this.pro_ToF==true"
+                                                                    (change)="CalculoCambio()">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" (click)="fechaVencimiento()"
+                                            data-dismiss="modal">Aceptar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+
+<div href="javascript:location.reload()" class="container" style="margin-top: 50px;">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+
+                <div class="card-header" style=background-color:#878484;>
+                    Factura
+                </div>
+
+                <div class="card-body" style=background-color:#878484;>
+
+                    <button type="button" [routerLink]="['/Detalle_compras']"
+                        class="btn btn-primary">
+                        Nueva Factura
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-12" >
+            <table _ngcontent-ksu-c56="" class="table table-bordered table-hover bg-white">
+                <thead>
+                    <tr>
+                        <th>Acciones</th>
+                        <th>Código</th>
+                        <th>Proveedor</th>
+                        <th>Compra Fecha</th>
+                        <th>Tipo Compra</th>
+                        <th>Fecha Vencimiento</th>
+                        <th>Total</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let i of fac_comprass">
+                        <td class="d-flex justify-content-center">
+                            <a class="btn btn-info" [routerLink]="['/vista-maes-deta', i.pro_cedula_ruc,i.fcom_id]">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a class="btn btn-danger" (click)="eliminarFac_compras(i.fcom_id)">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                            <a class="btn btn-info" (click)="makePDF(i.fcom_id)">
+                                <i class="fas fa-file-download"></i>
+                            </a>
+                        </td>
+                        <td>
+                            {{i.fcom_id}}
+                        </td>
+                        <td>
+                            {{i.pro_cedula_ruc}}
+                        </td>
+                        <td>
+                            {{i.fcom_fecha|date: "dd / MM / yyyy"}}
+                        </td>
+                        <td>
+                            <div *ngIf="i.fcom_credito_contado">Crédito</div>
+                            <div *ngIf="!i.fcom_credito_contado">Contado</div>
+                        </td>
+                        <td>
+                            {{i.fcom_fechavencimiento|date: "dd / MM / yyyy"}}
+                        </td>
+                        <td>
+                            {{i.fcom_total | number: "1.0-2"}}
+                        </td>
+
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

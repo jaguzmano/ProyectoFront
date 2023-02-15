@@ -1,0 +1,58 @@
+<p>vista-cab-det works!</p>
+
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                FACTURA ELECTRONICA
+            </div>
+           
+        </div>
+        <tfoot>
+            <div class="form-group">
+                <div class="form-group">
+                    <label *ngFor="let t of  objCabs" >
+                        <h4>CLIENTE </h4>
+                    
+                        <h4>Nombre : {{t.cli_nombres}}</h4>
+                  
+                        <h4>Direccion:{{t.cli_direccion}}</h4>
+
+                    </label>
+                </div>
+                
+                <button  type="button"  [routerLink]="['/cabecera']"
+                    class="btn btn-primary btn-block">
+                    Regresar
+                </button>
+            </div>
+        </tfoot>
+    
+        
+    </div>
+    
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>Modelo</th>
+                        <th>Marca</th>
+                        <th>Cantidad </th>
+                        <th>Precio </th>
+                        <th>subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of detalles">
+                        <td>{{d.aut_modelo}}</td>
+                        <td>{{d.mar_nombre}}</td>
+                        <td>{{d.det_com_cantidad}}</td>
+                        <td>{{d.aut_precio}}</td>
+                        <td>{{d.det_com_precio_total}}</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

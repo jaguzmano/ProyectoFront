@@ -1,0 +1,53 @@
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                Factura Electrónica
+            </div>
+                <table class="table table-bordered table-hover bg-white">
+                    <thead>
+                <tr>
+                    <th> Proveedor  </th>
+                    <th> Cedula </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{this.pro_nombre}}</td>
+                    <td>{{this.pro_cedula_ruc}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <tfoot>
+            <div class="form-group">
+                <button type="button" [routerLink]="['/fac_compras']" class="btn btn-primary btn-block">
+                    Regresar
+                </button>
+            </div>
+        </tfoot>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Cantidad </th>
+                    <th>Precio </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let d of Detalle_comprass">
+                    <td>{{d.prod_nombre}}</td>
+                    <td>{{d.prod_descripcion}}</td>
+                    <td>{{d.dcom_cantidad}}</td>
+                    <td>{{d.dcom_precio}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

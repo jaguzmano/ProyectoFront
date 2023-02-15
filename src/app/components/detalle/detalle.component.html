@@ -1,0 +1,114 @@
+<p>detalle works!</p>
+
+<div class="container" style="margin-top: 70px;">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header" >
+                    Crear Factura
+                </div>
+                     inicio ......................................
+                
+
+                    fin ......................................
+                <div class="card-body">
+
+                    <form [formGroup]="form">
+                        <div class="form-group">  
+                            <label for="inputGroupSelect01">Seleccione el Producto:</label>
+                            <select class="form-control" aria-label=".form-select-lg example" id="inputGroupSelect01"
+                                formControlName="objDetSelected" (change)="agregarObjDet()">
+                                <option [ngValue]="null" disabled>Seleccione</option>
+                                <option *ngFor="let p of objDets" [ngValue]="p">{{p.aut_modelo + " COD: " +
+                                    p.aut_codigo}}
+                                </option>
+                            </select>
+                            <label for="inputGroupSelect01">Seleccione la Marca:</label>
+                            <select class="form-control" aria-label=".form-select-lg example" id="inputGroupSelect01"
+                                formControlName="marcaSelected" (change)="agregarMarca()">
+                                <option [ngValue]="null" disabled>Seleccione</option>
+                                <option *ngFor="let p of marcas" [ngValue]="p">{{p.mar_nombre + " COD: " +
+                                    p.mar_codigo}}
+                                </option>
+                            </select>
+                            
+                            <label for="Cantidad">Cantidad :</label>
+                            <input type="text" required name="Cantidad" formControlName="txtcantidad" placeholder="1"
+                                class="form-control">
+                            <hr />
+                        </div>
+                        
+                       
+                        <button type="button" (click)="agregarDetalle()" class="btn btn-primary">
+                            Agregar Plato
+                        </button>
+                        
+                    
+                    </form>
+
+                </div>
+            </div>
+            
+        </div>
+
+        <!--
+                        det_com_codigo:Number,
+                        com_codigo:Number,
+                        mar_codigo:Number, 
+                        aut_codigo:Number,
+                        det_com_cantidad:Number,
+                        det_com_precio_total:Number,
+                        det_com_estado:Boolean,
+                        aut_modelo:String
+        -->
+        
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover bg-white">
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Marca</th>
+                        <th>Cantidad </th>
+                        <th>Precio </th>
+                        <th>subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let d of detalles">
+                        <td>{{d.aut_modelo}}</td>
+                        <td>{{d.mar_nombre}}</td>
+                        <td>{{d.det_com_cantidad}}</td>
+                        <td>{{d.aut_precio}}</td>
+                        <td>{{d.det_com_precio_total}}</td>
+                        
+                        <td>
+                            <button type="button" (click)="quitarDetalle(d)" class="btn btn-secondary">
+                                Quitar Plato
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                
+                <tfoot>
+                    <div class="form-group">
+                        <label for="Total">Total: </label>
+                        <input type="text" readonly name="Total" value="{{txtTotal}}" class="form-control">
+                        <hr />
+                        
+                        <button *ngIf="detalles.length > 0" type="button" (click)="postCabeceraDetalle()" [routerLink]="['/cabecera']"
+                            
+                            class="btn btn-primary btn-block">
+                            
+                            Facturar
+                        </button>
+                        
+                    </div>
+                </tfoot>
+                
+                
+            </table>
+        </div>
+   
+    </div>
+</div>

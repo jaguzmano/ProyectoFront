@@ -1,0 +1,170 @@
+<p>obj-det works!</p>
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                Administrar Teams
+            </div>
+            <div class="card-body">
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                    data-target="#crearTeams">Nuevo Vehiculo</button>
+            </div>
+            
+            <div class="modal fade" id="crearTeams" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Crear Vehiculo</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                                                    
+                    <!---
+                                                aut_codigo:Number,
+                                                aut_tipo:String, 
+                                                aut_modelo:String,
+                                                aut_anio_fabricacion:Number,
+                                                aut_cilindraje:Number, 
+                                                aut_precio:Number, 
+                                                aut_estado:Boolean
+                                            -->
+                                                            
+                        <div class="modal-body">
+                            <form [formGroup]="form">
+                                <div class="form-group">
+                                    <input type="text" name="Tipo vehiculo" formControlName="txtaut_tipo"
+                                        placeholder="Insertar Tipo vehiculo" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="Modelo vehiculo" formControlName="txtaut_modelo"
+                                        placeholder="Insertar Modelo vehiculo" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" name="Anio " formControlName="txtaut_anio_fabricacion"
+                                        placeholder="Insertar Anio vehiculo" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" name="Cilindraje " formControlName="txtaut_cilindraje"
+                                        placeholder="Insertar Cilindraje vehiculo" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" name="Precio" formControlName="txtaut_precio"
+                                        placeholder="Insertar Precio vehiculo" class="form-control">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                    <button type="button" class="btn btn-primary" (click)="crearObjDet()"
+                                        data-dismiss="modal">Crear</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            
+        </div>
+        <button  type="button"  [routerLink]="['/cabecera']"
+                    class="btn btn-primary btn-block">
+                    Regresar
+                </button>
+        </div>
+    
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Modelo</th>
+                    <th>Anio</th>
+                    <th>Cilindraje</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!--
+                    
+    aut_codigo:Number,
+    aut_tipo:String, 
+    aut_modelo:String,
+    aut_anio_fabricacion:Number,
+    aut_cilindraje:Number, 
+    aut_precio:Number, 
+    aut_estado:Boolean
+                -->
+                <tr *ngFor="let i of objDets">
+                    <td>
+                        {{i.aut_tipo}}
+                    </td>
+                    <td>
+                        {{i.aut_modelo}}
+                    </td>
+                    <td>
+                        {{i.aut_anio_fabricacion}}
+                    </td>
+                    <td>
+                        {{i.aut_cilindraje}}
+                    </td>
+                    <td>
+                        {{i.aut_precio}}
+                    </td>
+                    <!--
+                    <td class="d-flex justify-content-center">
+                        
+                        <a [routerLink]="['/team-league',i.tea_id,i.tea_name]"
+                        class="btn btn-success ml-1">
+                        <i class="fas fa-plus-circle"></i>
+
+                        </a>
+                        <a class="btn btn-danger" (click)="eliminarTeams(i.tea_id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <a class="btn btn-success" data-toggle="modal" data-target="#editarTeams"
+                            (click)="infoUpdateTeams(i.tea_id,i.tea_name,i.tea_country)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="modal fade" id="editarTeams" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar Teams</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="form">
+                                            <div class="form-group">
+                                                <label>
+                                                    <h6>Id Teams:{{informacionTeams.tea_id}}</h6>
+                                                </label>
+                                                <input type="text" name="Nombre Teams" formControlName="txtname"
+                                                    placeholder="{{informacionTeams.tea_name}}" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="Country Teams" formControlName="txtcountry"
+                                                    placeholder="{{informacionTeams.tea_country}}" class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    (click)="actualizarTeams(informacionTeams.tea_id)"
+                                                    data-dismiss="modal">Actualizar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

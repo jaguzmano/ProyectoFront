@@ -1,0 +1,188 @@
+<p>cabecera works!</p>
+<div>
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                Factura
+            </div>
+            
+            
+
+            <div class="card-body">
+                
+                <a *ngIf="cabecera.cli_codigo > 0 " [routerLink]="['/detalle', cabecera.cli_codigo]" 
+               
+                class="btn btn-primary btn-block">Ingresar Detalle</a>
+                          
+                <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
+                    data-target="#crearFactura">Nuevo Factura</button>
+            </div>  
+        
+            <div class="modal fade" id="crearFactura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Crear Factura</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form [formGroup]="form">
+
+                            
+                            <div class="form-group">
+                                <label class="input-group-text" for="inputGroupSelect01">Clientes</label>
+                                    <select class="form-control" aria-label=".form-select-lg example" id="inputGroupSelect01"
+                                        formControlName="objCabSelected" >
+                                    <option [ngValue]="null" disabled>Seleccione</option>
+                                        <option *ngFor="let t of  objCabs" [ngValue]="t.cli_codigo">{{t.cli_codigo}}, {{t.cli_nombres}}
+                                        </option>
+                                    </select>
+
+                            
+                            </div>
+                            <!--
+                        com_codigo:number,
+                        cli_codigo:number, 
+                        com_total:number, 
+                        com_fecha:Date, 
+                        com_estado:Boolean
+                        cli_nombres:String,
+        -->
+                            <!--
+                            
+                                <div class="form-group">
+                                    <input type="text" name="Numero Factura" formControlName="txtfact_numero"
+                                        placeholder="Insertar Fac Numero" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="number" name="Tarifa 0" formControlName="txtfac_tarifa0"
+                                        placeholder="Insertar Tarifa 0" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" name="Tarifa 12" formControlName="txtfac_tarifa12"
+                                        placeholder="Insertar Tarifa 12" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="number" name="Iva" formControlName="txtfac_iva"
+                                        placeholder="Insertar Iva" class="form-control">
+                                </div>
+                                -->
+                                
+                                
+                            CREAR CABECERA TEMPORAL
+                            
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" (click)="crearCabecera()"
+                                    data-dismiss="modal">Crear</button>
+                               
+                            </div>
+                            
+                     
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+        
+        </div>
+        <button  type="button"  [routerLink]="['/cliente']"
+            class="btn btn-primary btn-block">
+            Clientes
+             </button>
+             <button  type="button"  [routerLink]="['/auto']"
+            class="btn btn-primary btn-block">
+            Autos
+             </button>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered table-hover bg-white">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of cabeceras">
+                    <td>
+                        {{i.cli_nombres}}
+                    </td>
+                    <td>
+                        {{i.com_total}}
+                    </td>
+                    <td>
+                        {{i.com_fecha}}
+                    </td>
+                    <td>
+                        <div *ngIf="i.com_estado">SI</div>
+                        <div *ngIf="!i.com_estado">NO</div>
+                    </td>
+                    
+                    
+                    <td class="d-flex justify-content-center">
+                        <!--
+                        <a class="btn btn-danger" (click)="eliminarCabecera(i.fac_id)" >
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        
+                        <a class="btn btn-success" data-toggle="modal" data-target="#editarLeague"
+                            (click)="infoUpdateLeague(i.lea_id,i.lea_name,i.lea_country,i.lea_state)">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="modal fade" id="editarLeague" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Editar League</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form [formGroup]="form">
+                                            <div class="form-group">
+                                                <label>
+                                                    <h6>Id League:{{informacionLeague.lea_id}}</h6>
+                                                </label>
+                                                <input type="text" name="Nombre League" formControlName="txtname"
+                                                    placeholder="{{informacionLeague.lea_name}}" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" name="Country League" formControlName="txtcountry"
+                                                    placeholder="{{informacionLeague.lea_country}}" class="form-control">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Cerrar</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    (click)="actualizarLeague(informacionLeague.lea_id)"
+                                                    data-dismiss="modal">Actualizar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         -->
+                        
+                         <a class="btn btn-info" [routerLink]="['/vista-cab-det', i.cli_codigo, i.com_codigo]">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

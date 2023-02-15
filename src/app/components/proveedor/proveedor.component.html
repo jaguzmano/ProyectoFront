@@ -1,0 +1,346 @@
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header" style=background-color:#dddddd;>
+                    <b>Administrar Proveedores</b>
+                </div>
+
+                <div class="card-body" style=background-color:#dddddd;>
+                    <div class="d-grid gap-20 d-md-flex">
+                        <a class="btn btn-info" style=background-color:#A9A9A9; [routerLink]="['/fac_compras']">
+                            <i class="fas fa-arrow-alt-left"> Regresar</i>
+                        </a>
+                        <button type="button" class="btn  btn-primary" data-toggle="modal"
+                            data-target="#crearProveedor">Nuevo Proveedor</button>
+                        <button type="button" class="btn btn-success" (click)="cargarProveedor()">
+                            Todos
+                        </button>
+                        <button type="button" class="btn btn-dark" (click)="cargarProveedorActivos()">
+                            Activos
+                        </button>
+                        <button type="button" class="btn btn-danger" (click)="cargarProveedorInactivos()">
+                            Inactivos
+                        </button>
+                        <form [formGroup]="form">
+                            <div class="controls form-inline">
+                                <div class="form-group">
+                                    <label for="Cedula">Buscar por Cédula : </label>
+                                    <input class="form-control" type="search" list="listamodelos"
+                                        [(ngModel)]="this.informacionProveedor.pro_cedula_ruc"
+                                        formControlName="ProveedorSelected" (change)="findProveedor()"
+                                        [readonly]="this.pro_ToF==false">
+                                    <datalist id="listamodelos">
+                                        <option *ngFor="let t of  proveedors">
+                                            {{t.pro_cedula_ruc+" "+t.pro_nombre}}
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="crearProveedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Crear Proveedor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--
+                           pro_cedula_ruc:"", 
+                            pro_nombre:"", 
+                            pro_direccion:"", 
+                            pro_ciudad:"", 
+                            pro_telefono:"", 
+                            pro_correo:"", 
+                            pro_credito_contado:""
+                        -->
+                    <div class="modal-body">
+                        <form [formGroup]="form">
+                            <div class="form-group">
+                                <input type="text" name="Cedula o RUC" formControlName="txtpro_cedula_ruc"
+                                    minlength="10" maxlength="10" placeholder="Insertar Cédula o RUC Proveedor"
+                                    class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="Nombre Proveedor" formControlName="txtpro_nombre"
+                                    placeholder="Insertar nombre Proveedor" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="Direccion Proveedor" formControlName="txtpro_direccion"
+                                    placeholder="Insertar Dirección Proveedor" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="Cuidad Proveedor" formControlName="txtpro_ciudad"
+                                    placeholder="Insertar Ciudad Proveedor" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="Telefono Proveedor" formControlName="txtpro_telefono"
+                                    maxlength="10" placeholder="Insertar Teléfono Proveedor" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="Correo Electronico" formControlName="txtpro_correo"
+                                    placeholder="Insertar Correo Electrónico" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <select name="pro_credito_contado" formControlName="txtpro_credito_contado">
+                                    <option value="" disabled selected>Seleccione tipo de pago...</option>
+                                    <option [ngValue]=true>Credito</option>
+                                    <option [ngValue]=false>Contado</option>
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button *ngIf="(this.form.value.txtpro_credito_contado == true ||this.form.value.txtpro_credito_contado == false) && this.form.value.txtpro_nombre.length >= 1 && 
+                                    this.form.value.txtpro_cedula_ruc.length >9 " type="button" class="btn btn-primary"
+                                    (click)="crearProveedor()" data-dismiss="modal">Crear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <table _ngcontent-ksu-c56="" class="table table-bordered table-hover bg-white">
+                <thead>
+                    <tr>
+                        <th>Acciones</th>
+                        <th>Cédula/RUC</th>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Cuidad</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Crédito/Contado</th>
+                        <th>Estado</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr *ngFor="let i of proveedors">
+                        <td class="d-flex justify-content-center">
+
+
+                            <a class="btn btn-danger" (click)="CargarProveedor(i.pro_cedula_ruc)" data-toggle="modal"
+                                data-target="#CofirmarBorrado">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                            <div class="modal fade" id="CofirmarBorrado" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                ¿Seguro desea Eliminar al Proveedor con sus facturas ?</h5>
+                                        </div>
+                                        <form [formGroup]="form">
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-success" data-dismiss="modal"
+                                                    (click)="eliminarFisicoProveedor()">SI
+                                                </button>
+                                                <button type="button" class="btn  btn-danger"
+                                                    data-dismiss="modal">NO</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn btn-success" data-toggle="modal" data-target="#editarProveedor"
+                                (click)="infoUpdateProveedor(i.pro_cedula_ruc, i.pro_nombre, i.pro_direccion, i.pro_ciudad, i.pro_telefono, i.pro_correo, i.pro_credito_contado, i.pro_estado)">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="btn btn-success" data-toggle="modal" data-target="#Saldos"
+                                (click)="buscarFac_prov(i.pro_cedula_ruc)" disabled="i.pro_credito_contado==true">
+                                <i class="fas fa-eye" disabled></i>
+                            </a>
+                            <div class="modal fade" id="editarProveedor" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Editar Proveedor</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                                (click)="refresh()">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form [formGroup]="form">
+                                                <div class="form-group">
+                                                    <!--
+                                                    pro_cedula_ruc:"",
+                                                    pro_nombre:"",
+                                                    pro_direccion:"",
+                                                    pro_ciudad:"",
+                                                    pro_telefono:"",
+                                                    pro_correo:"",
+                                                    pro_credito_contado:""
+                                                -->
+                                                    <label>
+                                                        <h6>Id Proveedor:{{ this.informacionProveedor.pro_cedula_ruc }}
+                                                        </h6>
+                                                    </label>
+                                                    <input type="text" name="Nombre Proveedor"
+                                                        formControlName="txtpro_nombre"
+                                                        [(ngModel)]="this.informacionProveedor.pro_nombre"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="direccion Proveedor"
+                                                        formControlName="txtpro_direccion"
+                                                        [(ngModel)]="this.informacionProveedor.pro_direccion"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="direccion Proveedor"
+                                                        formControlName="txtpro_ciudad"
+                                                        [(ngModel)]="this.informacionProveedor.pro_ciudad"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="telefono Proveedor" maxlength="10"
+                                                        formControlName="txtpro_telefono"
+                                                        [(ngModel)]="this.informacionProveedor.pro_telefono"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" name="Correo Electronico"
+                                                        [(ngModel)]="this.informacionProveedor.pro_correo"
+                                                        formControlName="txtpro_correo" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+
+                                                    <select name="pro_credito_contado"
+                                                        formControlName="txtpro_credito_contado">
+                                                        <option
+                                                            [ngValue]="this.informacionProveedor.pro_credito_contado"
+                                                            selected>Seleccione tipo de pago...</option>
+                                                        <option [ngValue]=true>Credito</option>
+                                                        <option [ngValue]=false>Contado</option>
+                                                    </select>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="checkbox" id="vehicle1" name="vehicle1"
+                                                        ng-true-value="'true'" ng-false-value="'false'"
+                                                        formControlName="txtEstadoTrue" [checked]="this.verificador">
+                                                    <label for="vehicle1"> Activo</label><br>
+                                                    <!--
+                                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="false"  [disabled]="this.verificador==false" formControlName="txtEstadoTrue">
+                                                    <label for="vehicle1"> Inactivo</label><br>
+                                                    -->
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                        (click)="refresh()">Cerrar</button>
+                                                    <button
+                                                        *ngIf="this.form.value.txtpro_credito_contado == true || this.form.value.txtpro_credito_contado == false  "
+                                                        type="button" class="btn btn-primary"
+                                                        (click)="actualizaProveedor(informacionProveedor.pro_cedula_ruc)"
+                                                        data-dismiss="modal">Actualizar</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--katari-->
+
+                            <div class="modal fade" id="Saldos" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-form" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Saldos del Proveedor</h5>
+                                            <button type="button" onclick="location.reload()" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form [formGroup]="form">
+                                                <table class="table table-bordered table-hover bg-white">
+                                                    <thead>
+
+                                                        <tr>
+                                                            <th>Factura</th>
+                                                            <th>Fecha</th>
+                                                            <th>Fecha Vencimiento</th>
+                                                            <th>Forma Pago</th>
+                                                            <th>Total</th>
+                                                            <th>Estado Pago</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr *ngFor="let i of fac_proveedor">
+                                                            <td>
+                                                                {{i.fcom_id}}
+                                                            </td>
+                                                            <td>
+                                                                {{i.fcom_fecha|date: "dd / MM / yyyy"}}
+                                                            </td>
+                                                            <td>
+                                                                {{i.fcom_fechavencimiento|date: "dd / MM / yyyy"}}
+                                                            </td>
+                                                            <td>
+                                                                <div *ngIf="i.fcom_credito_contado">Crédito</div>
+                                                                <div *ngIf="!i.fcom_credito_contado">Contado</div>
+                                                            </td>
+                                                            <td>
+                                                                {{i.fcom_total| number: "1.0-2"}}
+                                                            </td>
+                                                            <td>
+                                                                <div *ngIf="i.fcom_estado">Pagado</div>
+                                                                <div *ngIf="!i.fcom_estado">Pendiente</div>
+                                                            </td>
+                                                    </tbody>
+                                                </table>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            {{i.pro_cedula_ruc}}
+                        </td>
+                        <td>
+                            {{i.pro_nombre}}
+                        </td>
+                        <td>
+                            {{i.pro_direccion}}
+                        </td>
+                        <td>
+                            {{i.pro_ciudad}}
+                        </td>
+                        <td>
+                            {{i.pro_telefono}}
+                        </td>
+                        <td>
+                            {{i.pro_correo}}
+                        </td>
+                        <td style="color: black;">
+                            <div *ngIf="i.pro_credito_contado">Crédito</div>
+                            <div *ngIf="!i.pro_credito_contado">Contado</div>
+                        </td>
+
+                        <td>
+                            <div *ngIf="i.pro_estado">Activo</div>
+                            <div *ngIf="!i.pro_estado">Inactivo</div>
+                        </td>
+
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
